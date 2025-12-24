@@ -1,0 +1,27 @@
+﻿<Window x:Class="WordLearningApp.UI.CategoriesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Управление категориями" Height="500" Width="600">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ToolBar Grid.Row="0">
+            <Button Content="Добавить категорию" Click="BtnAddCategory_Click"/>
+            <Button Content="Редактировать" Click="BtnEditCategory_Click"/>
+            <Button Content="Удалить" Click="BtnDeleteCategory_Click"/>
+        </ToolBar>
+
+        <DataGrid Grid.Row="1" x:Name="CategoriesDataGrid" 
+                  AutoGenerateColumns="False" CanUserAddRows="False" Margin="0,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="200"/>
+                <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
