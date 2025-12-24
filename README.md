@@ -56,9 +56,7 @@ WordLearningApp – десктопное приложение для изуче�
 3. Структура базы данных
 Таблица 1: Words (Слова)
 Описание: Хранит информацию об иностранных словах и их переводах
-Table
-Copy
-Поле	Тип данных	Ограничения	Описание
+
 Id	int	PK, Identity	Уникальный идентификатор слова
 ForeignWord	nvarchar(100)	NOT NULL	Слово на иностранном языке
 Translation	nvarchar(100)	NOT NULL	Перевод слова
@@ -70,9 +68,7 @@ CategoryId	int	FK → Categories.Id	Ссылка на категорию
 
 Таблица 2: Categories (Категории)
 Описание: Тематические группы для слов
-Table
-Copy
-Поле	Тип данных	Ограничения	Описание
+
 Id	int	PK, Identity	Уникальный идентификатор категории
 Name	nvarchar(50)	NOT NULL, Unique	Название категории
 Description	nvarchar(200)	NULL	Описание категории (опционально)
@@ -82,9 +78,7 @@ Description	nvarchar(200)	NULL	Описание категории (опцион
 
 Таблица 3: UserProgress (Прогресс изучения)
 Описание: Отслеживает прогресс пользователя по каждому слову
-Table
-Copy
-Поле	Тип данных	Ограничения	Описание
+
 Id	int	PK, Identity	Уникальный идентификатор записи прогресса
 WordId	int	FK → Words.Id, Unique	Ссылка на изучаемое слово
 IsLearned	bit	NOT NULL, Default 0	Флаг изученности слова
@@ -96,18 +90,16 @@ LastReviewed	datetime2	NULL	Дата последнего просмотра/п�
 
 Таблица 4: Subscriptions (Подписки)
 Описание: Хранит информацию о платных подписках пользователя
-Table
-Copy
-Поле	Тип данных	Ограничения	Описание
+
 Id	int	PK, Identity	Уникальный идентификатор подписки
 StartDate	date	NOT NULL	Дата начала действия подписки
 EndDate	date	NOT NULL	Дата окончания действия подписки
 Type	nvarchar(10)	NOT NULL	Тип подписки (Month/Year)
+
+
 Таблица 5: Payments (Платежи)
 Описание: История платежей за подписки
-Table
-Copy
-Поле	Тип данных	Ограничения	Описание
+
 Id	int	PK, Identity	Уникальный идентификатор платежа
 Amount	decimal(10,2)	NOT NULL	Сумма платежа в рублях
 PaymentDate	datetime2	NOT NULL	Дата и время платежа
@@ -118,8 +110,7 @@ Status	nvarchar(20)	NOT NULL	Статус платежа (Success/Failed)
 
 Таблица 6: TestResults (Результаты тестов)
 Описание: Хранит историю прохождения тестов
-Table
-Copy
+
 Поле	Тип данных	Ограничения	Описание
 Id	int	PK, Identity	Уникальный идентификатор результата теста
 TestDate	datetime2	NOT NULL	Дата и время прохождения теста
@@ -127,37 +118,7 @@ CorrectAnswers	int	NOT NULL	Количество правильных ответ
 TotalQuestions	int	NOT NULL	Общее количество вопросов в тесте
 Percentage	float	NOT NULL	Процент правильных ответов (0-100)
 CategoryName	nvarchar(50)	NULL	Название категории или "Изученные слова"
-ERD-диаграмма:
-Copy
 
-┌─────────────────┐        ┌─────────────────┐
-│   Categories    │        │   Subscriptions │
-│-----------------│        │-----------------│
-│ PK Id           │        │ PK Id           │
-│     Name        │        │     StartDate   │
-│     Description │        │     EndDate     │
-└─────────┬───────┘        │     Type        │
-          │                └─────────┬───────┘
-          │                          │
-┌─────────▼───────┐        ┌─────────▼───────┐
-│     Words       │        │    Payments     │
-│-----------------│        │-----------------│
-│ PK Id           │        │ PK Id           │
-│ FK CategoryId   │        │     Amount      │
-│     ForeignWord │        │     PaymentDate │
-│     Translation │        │     Status      │
-└─────────┬───────┘        └─────────────────┘
-          │
-┌─────────▼──────────┐     ┌─────────────────┐
-│   UserProgress     │◄────►│  TestResults    │
-│--------------------│     │-----------------│
-│ PK Id              │     │ PK Id           │
-│ FK WordId (Unique) │     │     TestDate    │
-│     IsLearned      │     │     CorrectAnswers
-│     ReviewCount    │     │     TotalQuestions
-│     LastReviewed   │     │     Percentage  │
-└────────────────────┘     │     CategoryName│
-                           └─────────────────┘
 
 4. Основные формы приложения
 Форма 1: MainWindow (Главное окно)
